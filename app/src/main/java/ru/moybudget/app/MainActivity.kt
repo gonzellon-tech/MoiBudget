@@ -45,9 +45,19 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadEntries()
-        render()
-        fetchRate(silent = true)
+        try {
+            loadEntries()
+            render()
+            fetchRate(silent = true)
+        } catch (e: Throwable) {
+            val error = TextView(this).apply {
+                text = "ОШИБКА ЗАПУСКА\\n\\n" + android.util.Log.getStackTraceString(e)
+                textSize = 14f
+                setTextColor(Color.RED)
+                setPadding(24, 24, 24, 24)
+            }
+            setContentView(ScrollView(this).apply { addView(error) })
+        }
     }
 
     private fun today(): String = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
