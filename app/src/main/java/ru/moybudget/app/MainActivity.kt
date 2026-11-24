@@ -35,8 +35,8 @@ class MainActivity : Activity() {
     private val currencies = listOf("RUB", "KGS")
     private var activeTab = 0 // 0 RUB, 1 KGS, 2 combined
     private var selectedDate = today()
-    private var kgsToRub = prefs.getString("kgs_to_rub", "0.93938")?.toDoubleOrNull() ?: 0.93938
-    private var rateUpdatedAt = prefs.getString("rate_updated_at", "Не обновлялся") ?: "Не обновлялся"
+    private var kgsToRub = 0.93938
+    private var rateUpdatedAt = "Не обновлялся"
     private var rateStatus = "Курс сохранён"
     private lateinit var root: LinearLayout
     private val green = Color.rgb(35, 119, 80)
@@ -45,6 +45,9 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        kgsToRub = prefs.getString("kgs_to_rub", "0.93938")?.toDoubleOrNull() ?: 0.93938
+        rateUpdatedAt = prefs.getString("rate_updated_at", "Не обновлялся") ?: "Не обновлялся"
+
         try {
             loadEntries()
             render()
